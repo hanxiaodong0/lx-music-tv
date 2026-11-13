@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { memo, useRef, useState } from 'react'
 import { View, TouchableOpacity, FlatList, type FlatListProps } from 'react-native'
 
@@ -35,7 +36,7 @@ const ListItem = memo(({ id, activeId, onPress }: {
           ? <Icon style={styles.listActiveIcon} name="chevron-right" size={12} color={theme['c-primary-font']} />
           : null
       }
-      <TouchableOpacity style={styles.listName} onPress={handlePress}>
+      <TouchableOpacity nativeID={`tv-setting-${id}`} style={styles.listName} onPress={handlePress}>
         <Text numberOfLines={1} size={16} color={active ? theme['c-primary-font'] : theme['c-font']}>{t(`setting_${id}`)}</Text>
       </TouchableOpacity>
     </View>
@@ -81,7 +82,7 @@ export default ({ onChangeId }: {
       maxToRenderPerBatch={9}
       // updateCellsBatchingPeriod={80}
       windowSize={9}
-      removeClippedSubviews={true}
+      removeClippedSubviews={!isTV}
       initialNumToRender={18}
       renderItem={renderItem}
       keyExtractor={getkey}

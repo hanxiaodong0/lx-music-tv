@@ -60,7 +60,7 @@ export default memo(({ item, index, showSource, onPress, onLongPress, onShowMenu
 
   return (
     <View style={{ ...styles.listItem, width: rowInfo.rowWidth, height: ITEM_HEIGHT, backgroundColor: isSelected ? theme['c-primary-background-hover'] : 'rgba(0,0,0,0)' }}>
-      <TouchableOpacity style={styles.listItemLeft} onPress={() => { onPress(item, index) }} onLongPress={() => { onLongPress(item, index) }}>
+      <TouchableOpacity nativeID={`tv-song-${item.id}`} style={[styles.listItemLeft, { height: '100%' }]} onPress={() => { onPress(item, index) }} onLongPress={() => { onLongPress(item, index) }}>
         <Text style={styles.sn} size={13} color={theme['c-300']}>{index + 1}</Text>
         <View style={styles.itemInfo}>
           <Text numberOfLines={1}>{item.name}</Text>
@@ -76,7 +76,7 @@ export default memo(({ item, index, showSource, onPress, onLongPress, onShowMenu
           ) : null
         }
       </TouchableOpacity>
-     <TouchableOpacity onPress={handleShowMenu} ref={moreButtonRef} style={styles.moreButton}>
+     <TouchableOpacity nativeID={`tv-song-more-${item.id}`} accessibilityLabel="更多操作" onPress={handleShowMenu} ref={moreButtonRef} style={styles.moreButton}>
         <Icon name="dots-vertical" style={{ color: theme['c-350'] }} size={12} />
       </TouchableOpacity>
     </View>

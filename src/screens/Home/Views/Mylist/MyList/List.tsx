@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { memo, useEffect, useRef } from 'react'
 import { View, TouchableOpacity, FlatList, type NativeScrollEvent, type NativeSyntheticEvent, type FlatListProps } from 'react-native'
 
@@ -52,7 +53,7 @@ const ListItem = memo(({ item, index, activeId, onPress, onShowMenu }: {
           : null
       }
       { fetching ? <Loading color={active ? theme['c-primary-font'] : theme['c-font']} style={styles.loading} /> : null }
-      <TouchableOpacity style={styles.listName} onPress={handlePress}>
+      <TouchableOpacity nativeID={`tv-list-${item.id}`} style={styles.listName} onPress={handlePress}>
         <Text numberOfLines={1} color={active ? theme['c-primary-font'] : theme['c-font']}>{item.name}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleShowMenu} ref={moreButtonRef} style={styles.listMoreBtn}>
@@ -124,7 +125,7 @@ export default ({ onShowMenu }: {
       maxToRenderPerBatch={9}
       // updateCellsBatchingPeriod={80}
       windowSize={9}
-      removeClippedSubviews={true}
+      removeClippedSubviews={!isTV}
       initialNumToRender={18}
       renderItem={renderItem}
       keyExtractor={getkey}

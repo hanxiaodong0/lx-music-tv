@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { memo, type ComponentProps } from 'react'
 import { Text, type TextProps as _TextProps, StyleSheet, Animated, type ColorValue, type TextStyle } from 'react-native'
 import { useTextShadow, useTheme } from '@/store/theme/hook'
@@ -49,6 +50,7 @@ export default memo(({ style, size = 15, color, children, ...props }: TextProps)
     <Text
       style={style}
       {...props}
+      selectable={isTV ? false : props.selectable}
     >{children}</Text>
   )
 })

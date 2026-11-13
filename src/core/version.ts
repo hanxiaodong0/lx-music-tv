@@ -6,6 +6,7 @@ import { getIgnoreVersion, getIgnoreVersionFailTipTime, saveIgnoreVersion, saveI
 import { showVersionModal } from '@/navigation'
 import { Navigation } from 'react-native-navigation'
 import { toast } from '@/utils/tools'
+import { isTV } from '@/utils/tv'
 
 export const showModal = () => {
   if (versionState.showModal) return
@@ -20,6 +21,10 @@ export const hideModal = (componentId: string) => {
 }
 
 export const checkUpdate = async() => {
+  if (isTV) {
+    versionActions.setVersionInfo({ status: 'idle', isLatest: true })
+    return
+  }
   versionActions.setVersionInfo({ status: 'checking' })
   let versionInfo: InitState['versionInfo'] = { ...versionState.versionInfo }
   try {
@@ -69,6 +74,10 @@ export const checkUpdate = async() => {
 }
 
 export const downloadUpdate = () => {
+  if (isTV) {
+    toast('TV 测试版请通过新的 TV 安装包更新')
+    return
+  }
   versionActions.setVersionInfo({ status: 'downloading' })
   versionActions.setProgress({ total: 0, current: 0 })
 

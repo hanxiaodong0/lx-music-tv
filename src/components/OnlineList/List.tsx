@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { useMemo, useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import { FlatList, type FlatListProps, RefreshControl, View } from 'react-native'
 
@@ -239,7 +240,7 @@ const List = forwardRef<ListType, ListProps>(({
       maxToRenderPerBatch={4}
       // updateCellsBatchingPeriod={80}
       windowSize={8}
-      removeClippedSubviews={true}
+      removeClippedSubviews={!isTV}
       initialNumToRender={12}
       renderItem={renderItem}
       keyExtractor={getkey}

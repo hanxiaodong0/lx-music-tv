@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { isTV } from '@/utils/tv'
 
 import ListMenu, { type ListMenuType } from './ListMenu'
 import ListNameEdit, { type ListNameEditType } from './ListNameEdit'
@@ -10,7 +11,7 @@ import DuplicateMusic, { type DuplicateMusicType } from './DuplicateMusic'
 
 
 export default () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(isTV)
   const listMenuRef = useRef<ListMenuType>(null)
   const listNameEditRef = useRef<ListNameEditType>(null)
   const listMusicSortRef = useRef<ListMusicSortType>(null)

@@ -1,3 +1,4 @@
+import { isTV, focusTV } from '@/utils/tv'
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 
@@ -49,6 +50,7 @@ export default forwardRef<ActiveListType, ActiveListProps>(({ onShowSearchBar, o
   }))
 
   const showList = () => {
+    if (isTV) { focusTV(`tv-list-${currentListId}`); return }
     global.app_event.changeLoveListVisible(true)
   }
 

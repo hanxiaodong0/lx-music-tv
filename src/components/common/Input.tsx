@@ -1,4 +1,5 @@
-import { useRef, useImperativeHandle, forwardRef, useCallback } from 'react'
+import { useRef, useImperativeHandle, forwardRef, useCallback, useState } from 'react'
+import { isTV } from '@/utils/tv'
 import { TextInput, View, TouchableOpacity, StyleSheet, type TextInputProps } from 'react-native'
 import { Icon } from '@/components/common/Icon'
 import { createStyle } from '@/utils/tools'
@@ -60,6 +61,7 @@ export interface InputType {
 
 export default forwardRef<InputType, InputProps>(({ onChangeText, onClearText, clearBtn, style, size = 14, ...props }, ref) => {
   const inputRef = useRef<TextInput>(null)
+  const [editing, setEditing] = useState(false)
   const theme = useTheme()
   // const scaleClearBtn = useRef(new Animated.Value(0)).current
 
@@ -109,8 +111,7 @@ export default forwardRef<InputType, InputProps>(({ onChangeText, onClearText, c
     onChangeText?.(text)
   }, [onChangeText])
 
-  return (
-    <View style={styles.content}>
+  const input = (
       <TextInput
         autoCapitalize="none"
         onChangeText={changeText}
@@ -118,7 +119,25 @@ export default forwardRef<InputType, InputProps>(({ onChangeText, onClearText, c
         style={StyleSheet.compose({ ...styles.input, color: theme['c-font'], fontSize: setSpText(size) }, style)}
         placeholderTextColor={theme['c-primary-dark-100-alpha-600']}
         selectionColor={theme['c-primary-light-100-alpha-300']}
-        ref={inputRef} {...props} />
+        ref={inputRef} {...props}
+        focusable={isTV ? editing : props.focusable}
+        onFocus={event => { setEditing(true); props.onFocus?.(event) }}
+        onBlur={event => { setEditing(false); props.onBlur?.(event) }} />
+  )
+
+  return (
+    <View style={styles.content}>
+      {isTV ? <TouchableOpacity
+        style={{ flex: 1 }}
+        activeOpacity={1}
+        accessible={!editing}
+        focusable={!editing}
+        onPress={() => { inputRef.current?.focus() }}
+        accessibilityLabel={props.placeholder ?? '输入内容'}
+      >
+        {input}
+      </TouchableOpacity> : input}
+
       {/* <View style={styles.clearBtnContent}>
       <Animated.View style={{ ...styles.clearBtnContent, transform: [{ scale: scaleClearBtn }] }}> */}
         {clearBtn

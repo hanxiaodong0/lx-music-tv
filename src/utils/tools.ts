@@ -1,4 +1,5 @@
 import { Platform, ToastAndroid, BackHandler, Linking, Dimensions, Alert, Appearance, PermissionsAndroid, AppState, StyleSheet, type ScaledSize } from 'react-native'
+import { isTV } from './tv'
 // import ExtraDimensions from 'react-native-extra-dimensions-android'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { storageDataPrefix } from '@/config/constant'
@@ -535,6 +536,7 @@ export interface RowInfo {
 export type RowInfoType = 'full' | 'medium'
 
 export const getRowInfo = (type: RowInfoType = 'full'): RowInfo => {
+  if (isTV) return { rowNum: undefined, rowWidth: '100%' }
   const win = windowSizeTools.getSize()
   let isMultiRow = isHorizontalMode(win.width, win.height)
   if (type == 'medium' && win.width / win.height < 1.8) isMultiRow = false

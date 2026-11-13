@@ -1,4 +1,5 @@
 import { memo, useMemo, useEffect, useRef, useCallback } from 'react'
+import { isTV } from '@/utils/tv'
 import { View, FlatList, type FlatListProps, type NativeSyntheticEvent, type NativeScrollEvent, type LayoutChangeEvent } from 'react-native'
 // import { useLayout } from '@/utils/hooks'
 import { type Line, useLrcPlay, useLrcSet } from '@/plugins/lyric'
@@ -27,7 +28,7 @@ const LrcLine = memo(({ line, lineNum, activeLine, onLayout }: LineProps) => {
   const theme = useTheme()
   const lrcFontSize = useSettingValue('playDetail.horizontal.style.lrcFontSize')
   const textAlign = useSettingValue('playDetail.style.align')
-  const size = lrcFontSize / 10
+  const size = isTV ? Math.max(lrcFontSize / 10, 24) : lrcFontSize / 10
   const lineHeight = setSpText(size) * 1.3
 
   const colors = useMemo(() => {

@@ -7,6 +7,7 @@
  */
 import { PixelRatio } from 'react-native'
 import { windowSizeTools } from './windowSizeTools'
+import { isTV } from './tv'
 
 // 高保真的宽度和高度
 const designWidth = 375.0
@@ -40,6 +41,7 @@ const scale = Math.min(scaleW, scaleH, 3.1)
  * @returns dp
  */
 export function getTextSize(size: number) {
+  if (isTV) return Math.max(size * 1.1, 14)
   // console.log('screenW======' + screenW)
   // console.log('screenPxW======' + screenPxW)
   let scaleWidth = screenW / designWidth
@@ -60,6 +62,7 @@ export function setSpText(size: number) {
  * @returns dp
  */
 export function scaleSizeH(size: number) {
+  if (isTV) return size * global.lx.fontSize
   // console.log(screenPxH / designHeight)
   // let scaleHeight = size * Math.min(screenPxH / designHeight, 3.1)
   let scaleHeight = size * scale
@@ -73,6 +76,7 @@ export function scaleSizeH(size: number) {
  * @returns dp
  */
 export function scaleSizeW(size: number) {
+  if (isTV) return size * global.lx.fontSize
   // console.log(screenPxW / designWidth)
   // let scaleWidth = size * Math.min(screenPxW / designWidth, 3.1)
   let scaleWidth = size * scale

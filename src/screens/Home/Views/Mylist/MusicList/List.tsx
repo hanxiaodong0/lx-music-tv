@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { playList } from '@/core/player/player'
 import { useMemo, useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { FlatList, type NativeScrollEvent, type NativeSyntheticEvent, type FlatListProps } from 'react-native'
@@ -279,7 +280,7 @@ const List = forwardRef<ListType, ListProps>(({ onShowMenu, onMuiltSelectMode, o
       horizontal={false}
       // updateCellsBatchingPeriod={80}
       windowSize={8}
-      removeClippedSubviews={true}
+      removeClippedSubviews={!isTV}
       initialNumToRender={12}
       renderItem={renderItem}
       keyExtractor={getkey}

@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import { View } from 'react-native'
+import { isTV } from '@/utils/tv'
 import settingState from '@/store/setting/state'
 import MusicList from './MusicList'
 import MyList from './MyList'
@@ -51,6 +53,13 @@ export default () => {
 
   const navigationView = () => <MyList />
   // console.log('render drawer content')
+
+  if (isTV) {
+    return <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ width: 180, borderRightWidth: 1, borderRightColor: theme['c-border-background'] }}><MyList /></View>
+      <View style={{ flex: 1 }}><MusicList /></View>
+    </View>
+  }
 
   return (
     <DrawerLayoutFixed

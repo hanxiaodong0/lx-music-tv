@@ -24,14 +24,16 @@ import {
 import VersionModal from './components/VersionModal'
 import PactModal from './components/PactModal'
 import SyncModeModal from './components/SyncModeModal'
+import FocusRoot from '@/components/tv/FocusRoot'
+import { isTV } from '@/utils/tv'
 
 function WrappedComponent(Component: any) {
   return function inject(props: Record<string, any>) {
     const EnhancedComponent = () => (
       <Provider>
-        <Component
-          {...props}
-        />
+        {isTV
+          ? <FocusRoot backFocusID={Component === Home ? 'tv-nav-active' : undefined}><Component {...props} /></FocusRoot>
+          : <Component {...props} />}
       </Provider>
     )
 

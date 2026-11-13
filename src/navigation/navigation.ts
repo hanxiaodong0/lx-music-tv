@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { Navigation } from 'react-native-navigation'
 // import { InteractionManager } from 'react-native'
 
@@ -67,12 +68,12 @@ export async function pushHomeScreen() {
               },
               statusBar: {
                 drawBehind: true,
-                visible: true,
+                visible: !isTV,
                 style: getStatusBarStyle(theme.isDark),
                 backgroundColor: 'transparent',
               },
               navigationBar: {
-                // visible: false,
+                visible: !isTV,
                 backgroundColor: theme['c-content-background'],
               },
               layout: {
@@ -132,12 +133,12 @@ export function pushPlayDetailScreen(componentId: string, skipAnimation = false)
           },
           statusBar: {
             drawBehind: true,
-            visible: true,
+            visible: !isTV,
             style: getStatusBarStyle(theme.isDark),
             backgroundColor: 'transparent',
           },
           navigationBar: {
-            // visible: false,
+            visible: !isTV,
             backgroundColor: theme['c-content-background'],
           },
           layout: {
@@ -217,12 +218,12 @@ export function pushSonglistDetailScreen(componentId: string, info: ListInfoItem
           },
           statusBar: {
             drawBehind: true,
-            visible: true,
+            visible: !isTV,
             style: getStatusBarStyle(theme.isDark),
             backgroundColor: 'transparent',
           },
           navigationBar: {
-            // visible: false,
+            visible: !isTV,
             backgroundColor: theme['c-content-background'],
           },
           layout: {
@@ -350,12 +351,12 @@ export function pushCommentScreen(componentId: string) {
           },
           statusBar: {
             drawBehind: true,
-            visible: true,
+            visible: !isTV,
             style: getStatusBarStyle(theme.isDark),
             backgroundColor: 'transparent',
           },
           navigationBar: {
-            // visible: false,
+            visible: !isTV,
             backgroundColor: theme['c-content-background'],
           },
           layout: {
@@ -438,7 +439,7 @@ export function pushCommentScreen(componentId: string) {
 //             backgroundColor: 'transparent',
 //           },
 //           navigationBar: {
-//             // visible: false,
+//             visible: !isTV,
 //             backgroundColor: theme['c-content-background'],
 //           },
 //           layout: {

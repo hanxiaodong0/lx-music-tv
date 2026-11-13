@@ -1,7 +1,9 @@
 // import { createStyle } from '@/utils/tools'
 import { useImperativeHandle, forwardRef, useState, useMemo } from 'react'
-import { Modal, TouchableWithoutFeedback, View, type ModalProps as _ModalProps } from 'react-native'
+import { Modal, TouchableWithoutFeedback, type ModalProps as _ModalProps } from 'react-native'
 import { useStatusbarHeight } from '@/store/common/hook'
+import FocusRoot from '@/components/tv/FocusRoot'
+import { isTV } from '@/utils/tv'
 // import { useWindowSize } from '@/utils/hooks'
 
 // const styles = createStyle({
@@ -91,10 +93,10 @@ export default forwardRef<ModalType, ModalProps>(({
     >
       {/* <StatusBar /> */}
       {/* <View style={{ flex: 1, paddingTop: statusBarPadding ? StatusBar.currentHeight : 0 }}> */}
-      <TouchableWithoutFeedback style={{ flex: 1, paddingTop: statusBarPadding ? statusBarHeight : 0 }} onPress={handleBgClose}>
-        <View style={{ flex: 1, backgroundColor: bgColor }}>
+      <TouchableWithoutFeedback accessible={!isTV} focusable={!isTV} style={{ flex: 1, paddingTop: statusBarPadding ? statusBarHeight : 0 }} onPress={handleBgClose}>
+        <FocusRoot style={{ flex: 1, backgroundColor: bgColor }}>
           {memoChildren}
-        </View>
+        </FocusRoot>
       </TouchableWithoutFeedback>
       {/* </View> */}
     </Modal>

@@ -1,3 +1,4 @@
+import { isTV } from '@/utils/tv'
 import { useImperativeHandle, forwardRef, useMemo, useRef, useState, type Ref } from 'react'
 import { View, Animated, TouchableHighlight } from 'react-native'
 import { useWindowSize } from '@/utils/hooks'
@@ -140,7 +141,7 @@ const Menu = ({
                     <Text style={{ textAlign: center ? 'center' : 'left' }} size={fontSize} numberOfLines={1}>{menu.label}</Text>
                   </View>
                 )
-              : menu.action == activeId
+              : menu.action == activeId && !isTV
                 ? (
                     <View
                       key={menu.action}

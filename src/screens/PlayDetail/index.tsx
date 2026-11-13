@@ -8,6 +8,8 @@ import PageContent from '@/components/PageContent'
 import StatusBar from '@/components/common/StatusBar'
 import { setComponentId } from '@/core/common'
 import { COMPONENT_IDS } from '@/config/constant'
+import { isTV } from '@/utils/tv'
+import TVPlayDetail from '@/screens/TV/PlayDetail'
 
 export default ({ componentId }: { componentId: string }) => {
   const isHorizontalMode = useHorizontalMode()
@@ -21,7 +23,7 @@ export default ({ componentId }: { componentId: string }) => {
     <PageContent>
       <StatusBar />
       {
-        isHorizontalMode
+        isTV ? <TVPlayDetail componentId={componentId} /> : isHorizontalMode
           ? <Horizontal componentId={componentId} />
           : <Vertical componentId={componentId} />
       }

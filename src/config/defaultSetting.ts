@@ -1,3 +1,5 @@
+import { isTV } from '@/utils/tv'
+
 const defaultSetting: LX.AppSetting = {
   version: '2.0',
   'common.isAutoTheme': false,
@@ -86,6 +88,16 @@ const defaultSetting: LX.AppSetting = {
 if (new Date().getMonth() < 2) {
   defaultSetting['theme.id'] = 'happy_new_year'
   defaultSetting['desktopLyric.style.lyricPlayedColor'] = 'rgba(255, 18, 34, 1)'
+}
+
+if (isTV) {
+  defaultSetting['theme.id'] = 'black'
+  defaultSetting['theme.darkId'] = 'black'
+  defaultSetting['common.homePageScroll'] = false
+  defaultSetting['common.useSystemFileSelector'] = false
+  defaultSetting['search.isShowHistorySearch'] = true
+  defaultSetting['player.cacheSize'] = '256'
+  defaultSetting['playDetail.style.align'] = 'center'
 }
 
 export default defaultSetting

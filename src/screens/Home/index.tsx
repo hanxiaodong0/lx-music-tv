@@ -7,6 +7,8 @@ import Vertical from './Vertical'
 import Horizontal from './Horizontal'
 import { navigations } from '@/navigation'
 import settingState from '@/store/setting/state'
+import { isTV } from '@/utils/tv'
+import TVHome from '@/screens/TV/Home'
 
 
 interface Props {
@@ -29,7 +31,7 @@ export default ({ componentId }: Props) => {
   return (
     <PageContent>
       {
-        isHorizontalMode
+        isTV ? <TVHome /> : isHorizontalMode
           ? <Horizontal />
           : <Vertical />
       }

@@ -1,5 +1,7 @@
-export const HEADER_HEIGHT = 42
-export const LIST_ITEM_HEIGHT = 54
+import { appId, isTV } from '@/utils/tv'
+
+export const HEADER_HEIGHT = isTV ? 48 : 42
+export const LIST_ITEM_HEIGHT = isTV ? 62 : 54
 export const LIST_SCROLL_POSITION_KEY = '__LIST_SCROLL_POSITION_KEY__'
 
 export const SPLIT_CHAR = {
@@ -95,7 +97,7 @@ export const storageDataPrefixOld = {
   notificationTipEnable: '@notification_tip_enable',
 } as const
 
-export const APP_PROVIDER_NAME = 'cn.toside.music.mobile.provider'
+export const APP_PROVIDER_NAME = `${appId}.provider`
 
 
 export const NAV_MENUS = [
