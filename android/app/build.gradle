@@ -118,7 +118,7 @@ android {
         tv {
             dimension "device"
             applicationIdSuffix ".tv"
-            versionNameSuffix "-tv.1"
+            versionNameSuffix "-tv.2"
             buildConfigField "boolean", "IS_TV", "true"
         }
     }
@@ -208,6 +208,7 @@ dependencies {
     // implementation "androidx.javascriptengine:javascriptengine:1.0.0-alpha07"
     // implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation 'wang.harlon.quickjs:wrapper-android:2.4.0'
+    implementation 'com.google.zxing:core:3.3.3'
 
   if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

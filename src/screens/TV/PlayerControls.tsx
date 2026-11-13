@@ -12,6 +12,15 @@ import playerState from '@/store/player/state'
 import commonState from '@/store/common/state'
 import { navigations } from '@/navigation'
 import { toast } from '@/utils/tools'
+import { useSettingValue } from '@/store/setting/hook'
+import { updateSetting } from '@/core/common'
+
+const playModes = [
+  { id: 'listLoop', label: '列表循环' },
+  { id: 'list', label: '顺序播放' },
+  { id: 'random', label: '随机播放' },
+  { id: 'singleLoop', label: '单曲循环' },
+] as const
 
 export default function PlayerControls({ showDetails = false }: { showDetails?: boolean }) {
   const theme = useTheme()
@@ -26,6 +35,13 @@ export default function PlayerControls({ showDetails = false }: { showDetails?: 
     setQueue({ id, songs: [...getListMusicSync(id)] })
   }
   const seek = (value: number) => { global.app_event.setProgress(value) }
+  const playMode = useSettingValue('player.togglePlayMethod')
+  const playModeIndex = playModes.findIndex(mode => mode.id == playMode)
+  const togglePlayMode = () => {
+    const next = playModes[(playModeIndex + 1) % playModes.length]
+    updateSetting({ 'player.togglePlayMethod': next.id })
+    toast(next.label)
+  }
 
   return <View style={[styles.panel, { borderTopColor: theme['c-border-background'] }]}>
     <View style={styles.summary}>
@@ -44,9 +60,9 @@ export default function PlayerControls({ showDetails = false }: { showDetails?: 
         if (!music.id) { toast('请先选择一首歌曲'); return }
         navigations.pushPlayDetailScreen(commonState.componentIds.home!, true)
       }}><Text>歌词</Text></Button>}
+      <Button nativeID="tv-play-mode" accessibilityLabel="切换播放模式" style={styles.button} onPress={togglePlayMode}><Text>{playModes[playModeIndex]?.label ?? '列表循环'}</Text></Button>
       <Button style={styles.button} onPress={openQueue}><Text>播放列表</Text></Button>
     </View>
-    <Text size={11} color={theme['c-500']}>进度条获得焦点后，左右键快退 / 快进 10 秒</Text>
     <Modal visible={queue != null} transparent onRequestClose={() => { setQueue(null) }}>
       <FocusRoot style={styles.modal}>
         <View style={[styles.dialog, { backgroundColor: theme['c-content-background'] }]}>

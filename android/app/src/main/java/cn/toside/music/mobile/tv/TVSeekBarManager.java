@@ -16,7 +16,9 @@ public class TVSeekBarManager extends SimpleViewManager<SeekBar> {
   @Override public String getName() { return "TVSeekBar"; }
   @Override protected SeekBar createViewInstance(ThemedReactContext context) {
     SeekBar view = new SeekBar(context);
-    view.setFocusable(true);
+    // Display-only: D-pad left/right should move focus past it instead of seeking.
+    view.setFocusable(false);
+    view.setFocusableInTouchMode(false);
     view.setThumbTintList(ColorStateList.valueOf(Color.rgb(255, 202, 74)));
     view.setProgressTintList(ColorStateList.valueOf(Color.rgb(255, 202, 74)));
     view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

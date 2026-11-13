@@ -6,5 +6,5 @@ interface NativeProps extends ViewProps {
 }
 const NativeSeekBar = requireNativeComponent<NativeProps>('TVSeekBar')
 export default function TVSeekBar({ value, duration, onSeek }: { value: number, duration: number, onSeek: (value: number) => void }) {
-  return <NativeSeekBar style={{ height: 44, width: '100%' }} value={value} duration={duration} onSeek={event => { onSeek(event.nativeEvent.value) }} accessibilityLabel="播放进度，左右键调整十秒" />
+  return <NativeSeekBar style={{ height: 44, width: '100%' }} value={value} duration={duration} onSeek={event => { onSeek(event.nativeEvent.value) }} accessibilityLabel="播放进度" />
 }

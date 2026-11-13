@@ -8,6 +8,8 @@ import { useTheme } from '@/store/theme/hook'
 import { useI18n } from '@/lang'
 // import SourceSelector, { type SourceSelectorProps, type SourceSelectorType } from '../SourceSelector'
 import { type Source } from '@/store/songlist/state'
+import { isTV } from '@/utils/tv'
+import RemoteInputQR from '@/components/tv/RemoteInputQR'
 
 interface IdInputType {
   setText: (text: string) => void
@@ -57,11 +59,13 @@ export default forwardRef<ModalType, ModalProps>(({ onOpenId }, ref) => {
   // const sourceSelectorRef = useRef<SourceSelectorType>(null)
   const inputRef = useRef<IdInputType>(null)
   const [visible, setVisible] = useState(false)
+  const [qrVisible, setQrVisible] = useState(false)
   const theme = useTheme()
   const t = useI18n()
 
   const handleShow = (source: Source) => {
     alertRef.current?.setVisible(true)
+    setQrVisible(true)
     requestAnimationFrame(() => {
       inputRef.current?.setText('')
       // sourceSelectorRef.current?.setSource(source)
@@ -82,25 +86,31 @@ export default forwardRef<ModalType, ModalProps>(({ onOpenId }, ref) => {
     },
   }))
 
-  const handleConfirm = () => {
-    let id = inputRef.current?.getText() ?? ''
+  const handleConfirm = (text?: string) => {
+    let id = text?.trim() ?? inputRef.current?.getText() ?? ''
     if (!id.length) return
     if (id.length > 500) id = id.substring(0, 500)
     alertRef.current?.setVisible(false)
     onOpenId(id)
+  }
+  const handleRemoteText = (text: string) => {
+    inputRef.current?.setText(text)
+    handleConfirm(text)
   }
 
   return (
     visible
       ? <ConfirmAlert
           ref={alertRef}
-          onConfirm={handleConfirm}
+          onConfirm={() => { handleConfirm() }}
+          onHide={() => { setQrVisible(false) }}
         >
           <View style={styles.content}>
             <View style={styles.col}>
               {/* <SourceSelector style={{ ...styles.selector, backgroundColor: theme['c-primary-input-background'] }} ref={sourceSelectorRef} onSourceChange={onSourceChange} /> */}
               <IdInput ref={inputRef} />
             </View>
+            {isTV && qrVisible ? <RemoteInputQR title="打开歌单" onText={handleRemoteText} /> : null}
             <Text style={styles.inputTipText} size={13} color={theme['c-600']}>{t('songlist_open_input_tip')}</Text>
           </View>
         </ConfirmAlert>
