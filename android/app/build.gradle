@@ -118,7 +118,7 @@ android {
         tv {
             dimension "device"
             applicationIdSuffix ".tv"
-            versionNameSuffix "-tv.3"
+            versionNameSuffix "-tv.4"
             buildConfigField "boolean", "IS_TV", "true"
         }
     }

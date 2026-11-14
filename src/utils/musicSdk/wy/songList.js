@@ -41,6 +41,8 @@ export default {
     const requestObj_listDetailLink = httpFetch(link)
     const { url, statusCode } = await requestObj_listDetailLink.promise
     // console.log(headers)
+    // Short links (163cn.tv) redirect to y.music.163.com pages that may now 404; the id is still in the URL.
+    if (this.regExps.listDetailLink.test(url)) return url.replace(this.regExps.listDetailLink, '$1')
     if (statusCode > 400) return this.handleParseId(link, ++retryNum)
     return this.regExps.listDetailLink.test(url)
       ? url.replace(this.regExps.listDetailLink, '$1')

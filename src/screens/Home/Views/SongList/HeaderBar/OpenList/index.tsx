@@ -14,6 +14,21 @@ import commonState from '@/store/common/state'
 //   onTagChange: (name: string, id: string) => void
 // }
 
+const linkSources: Array<[RegExp, Source]> = [
+  [/(?:^|\.)(?:163cn\.tv|163\.com)$/i, 'wy'],
+  [/(?:^|\.)kugou\.com$/i, 'kg'],
+  [/(?:^|\.)kuwo\.cn$/i, 'kw'],
+  [/(?:^|\.)qq\.com$/i, 'tx'],
+  [/(?:^|\.)migu\.cn$/i, 'mg'],
+]
+// Share text from music apps wraps the link in other words; keep only the URL.
+const extractLink = (text: string) => /https?:\/\/[^\s，。、《》（）()"'<>]+/i.exec(text)?.[0] ?? text
+const detectLinkSource = (text: string): Source | null => {
+  const host = /^https?:\/\/([^/?#:\s]+)/i.exec(text)?.[1]
+  if (!host) return null
+  return linkSources.find(([rxp]) => rxp.test(host))?.[1] ?? null
+}
+
 export interface OpenListType {
   setInfo: (source: Source) => void
 }
@@ -29,7 +44,8 @@ export default forwardRef<OpenListType, {}>((props, ref) => {
     },
   }))
 
-  const handleOpenSonglist = (id: string) => {
+  const handleOpenSonglist = (text: string) => {
+    const id = extractLink(text)
     // console.log(id, songlistInfoRef.current.source)
     navigations.pushSonglistDetailScreen(commonState.componentIds.home!, {
       play_count: undefined,
@@ -38,7 +54,7 @@ export default forwardRef<OpenListType, {}>((props, ref) => {
       name: '',
       img: undefined,
       desc: undefined,
-      source: songlistInfoRef.current.source,
+      source: detectLinkSource(id) ?? songlistInfoRef.current.source,
     })
   }
 
