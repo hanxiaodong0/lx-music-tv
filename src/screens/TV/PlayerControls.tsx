@@ -49,7 +49,7 @@ export default function PlayerControls({ showDetails = false }: { showDetails?: 
       <Text numberOfLines={1} size={12} color={theme['c-500']} style={styles.status}>{status}</Text>
       <Text size={12}>{progress.nowPlayTimeStr} / {progress.maxPlayTimeStr}</Text>
     </View>
-    <View style={styles.controls}>
+    <View nativeID="tv-player-bar" collapsable={false} style={styles.controls}>
       <Button accessibilityLabel="上一首" style={styles.button} onPress={() => { void playPrev() }}><Text>上一首</Text></Button>
       <Button nativeID="tv-play-toggle" accessibilityLabel={playing ? '暂停' : '播放'} style={styles.button} onPress={togglePlay}><Text>{playing ? '暂停' : '播放'}</Text></Button>
       <Button accessibilityLabel="下一首" style={styles.button} onPress={() => { void playNext() }}><Text>下一首</Text></Button>

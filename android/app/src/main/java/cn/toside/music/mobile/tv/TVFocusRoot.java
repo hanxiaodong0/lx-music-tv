@@ -193,6 +193,14 @@ public class TVFocusRoot extends ReactViewGroup {
         return true;
       }
     }
+    // Off-screen list rows can sit beside the player bar; keep left/right inside the bar.
+    View bar = ReactFindViewUtil.findView(this, "tv-player-bar");
+    if (bar instanceof ViewGroup && inside(current, (ViewGroup) bar)
+        && (direction == FOCUS_LEFT || direction == FOCUS_RIGHT)) {
+      View neighbor = FocusFinder.getInstance().findNextFocus((ViewGroup) bar, current, direction);
+      if (neighbor != null) focusAndReveal(neighbor, direction);
+      return true;
+    }
     View next = FocusFinder.getInstance().findNextFocus(this, current, direction);
     ScrollView scroll = verticalScrollParent(current);
     int sign = direction == FOCUS_DOWN ? 1 : -1;
